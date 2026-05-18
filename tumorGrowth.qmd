@@ -37,9 +37,12 @@ ggplot(
     y = "Volume(mm³)",
     X = "Day after graft"
   ) +
+  theme_classic() +
   theme(
     plot.title = element_text(
-      hjust = 0.5
+      hjust = 0.5,
+      face = "bold",
+      size = 16
     )
-  )
+  ) 
 ```
