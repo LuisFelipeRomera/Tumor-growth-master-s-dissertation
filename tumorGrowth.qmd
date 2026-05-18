@@ -1,0 +1,45 @@
+---
+title: "Tumor Progression Immunotherapy"
+author: "Luís Romera"
+format: pdf
+editor: visual
+---
+
+In this document, I'm going to evaluate the Tumor growth of mice treated with Immunocheckpoint blockers and chemoimmunotherapy.
+
+## First, lets plot the data
+
+```{r}
+#| message: false
+#| warning: false
+#| dev: png
+#accessing the archive folder
+setwd("C:/Users/luisr/Documentos/Documents/Documentos - Copia/Mestrado/Tumor Growth/Tumor-growth-master-s-dissertation")
+
+library(tidyverse)
+library(magick)
+
+tumorData <- read.csv("TumorGrowthctm.csv")
+
+ggplot(
+  tumorData,
+  aes(day, volume, color = group)
+) + geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  geom_errorbar(
+    aes(
+      ymin = volume-std, ymax = volume+std
+    ),
+    width = 0.5
+  ) +
+  labs(
+    title = "Tumor progression",
+    y = "Volume(mm³)",
+    X = "Day after graft"
+  ) +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5
+    )
+  )
+```
