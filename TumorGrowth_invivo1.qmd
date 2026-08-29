@@ -1,0 +1,62 @@
+---
+title: "Tumor Growth InVivo 1"
+author: "Luís Romera"
+format: pdf
+editor: visual
+---
+
+## 
+
+In this document, I'm going to analyse the tumor progression of the *In vivo* 1 of my master's dissertation.
+
+## Let's plot the data
+
+```{r}
+#| message: false
+#| warning: false
+#| dev: png
+getwd()
+
+library(tidyverse)
+library(magick)
+library(ggsci)
+
+tumorData <- read.csv("TumorGrowth1.csv")
+
+tumorPlot <- ggplot(
+  tumorData,
+  aes(day, volume, color = group)
+) + geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  geom_errorbar(
+    aes(
+      ymin = volume-std,
+      ymax = volume+std
+    ),
+    width = 0.5
+  ) +
+  labs(
+    title = "Tumor Progression In Vivo 1",
+    y = "Volume(mm³)",
+    x = "days after graft"
+  ) +
+  theme_classic() +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5,
+      face = "bold",
+      size = 16
+    )
+  )
+
+tumorPlot
+```
+
+```{r}
+ggsave(
+  filename = "TumorPlot_invivo1.pdf",
+  plot = tumorPlot,
+  width = 8,
+  height = 6
+)
+```
